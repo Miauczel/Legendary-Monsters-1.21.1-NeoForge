@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "item.legendary_monsters.music_disc_advance.desc"
+  },
+  "length_in_seconds": 176.0,
+  "sound_event": "legendary_monsters:cloud_golem_music"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:diorite"
+  },
+  "result": {
+    "id":"legendary_monsters:polished_diorite_pillar"
+  },
+  "count": 1
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "legendary_monsters:ancient_dripstone_bricks"
+  },
+  "result": {
+    "id":"legendary_monsters:ancient_dripstone_tiles"
+  },
+  "count": 4
+}

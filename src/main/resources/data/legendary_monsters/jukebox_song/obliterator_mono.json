@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "item.legendary_monsters.music_disc_obliterator.desc"
+  },
+  "length_in_seconds": 105.0,
+  "sound_event": "legendary_monsters:obliterator_mono"
+}

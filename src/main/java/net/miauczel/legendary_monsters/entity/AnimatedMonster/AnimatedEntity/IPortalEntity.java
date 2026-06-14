@@ -1,0 +1,13 @@
+package net.miauczel.legendary_monsters.entity.AnimatedMonster.AnimatedEntity;
+
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
+
+public class IPortalEntity extends IAnimatedEntity{
+
+    public IPortalEntity(EntityType<?> pEntityType, Level pLevel) {
+        super(pEntityType, pLevel);
+    }
+
+    }
+

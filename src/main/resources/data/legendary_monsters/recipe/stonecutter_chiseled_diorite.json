@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:diorite"
+  },
+  "result": {
+    "id":"legendary_monsters:chiseled_diorite"
+  },
+  "count": 1
+}

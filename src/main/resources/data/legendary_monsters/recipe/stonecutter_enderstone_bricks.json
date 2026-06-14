@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item":
+      "legendary_monsters:enderstone"
+  },
+  "result": {
+    "id":"legendary_monsters:enderstone_bricks"
+  },
+  "count": 1
+}
