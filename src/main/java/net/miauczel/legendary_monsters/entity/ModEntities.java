@@ -2,16 +2,10 @@ package net.miauczel.legendary_monsters.entity;
 
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.AnimatedEntity.*;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.CameraShakeEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.DynamicCameraZoomEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.IAnimatedBoss.CloudGolem.Cloud_GolemEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.IAnimatedBoss.PossessedPaladin.PossessedPaladinEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.IAnimatedBoss.TheObliterator.TheObliteratorEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.*;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.BeheadedKnight.BeheadedKnightEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.Fractured.FracturedApostleEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.Fractured.FracturedEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.HauntedGuardEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.HauntedKnightEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.ResurrectedKnight.ResurrectedKnightEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.AncientStronghold.AmbusherEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.AncientStronghold.Ancient_GuardianEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.AncientStronghold.SpikebugEntity;
@@ -19,21 +13,26 @@ import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Chorusling.Ch
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Chorusling.EndersentEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CloudyTemple.HoveringHurricaneEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CloudyTemple.StratlingEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Pets.knights.FHauntedGuardEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Pets.knights.FLivingArmorEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.BeheadedKnight.BeheadedKnightEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.Fractured.FracturedApostleEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.Fractured.FracturedEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.HauntedGuardEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.HauntedKnightEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.CollapsedKingdom.ResurrectedKnight.ResurrectedKnightEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.*;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Pets.MossyGolemEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Pets.SkeloraptorEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Pets.knights.FHauntedGuardEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Pets.knights.FLivingArmorEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.RuinedPyramid.BomberEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.RuinedPyramid.DuneSentinelEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.ShulkerTower.Shulker_MimicEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.SpaceStation.Flameborn.AnnihilationPursuer.AnnihilationPursuerEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.SpaceStation.FlameDrifter.FlameDrifterEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.SpaceStation.Flameborn.AnnihilationPursuer.AnnihilationPursuerEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.SpaceStation.Flameborn.FlamebornGuardEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.SpaceStation.Flameborn.FlamebornWarriorEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.SpaceStation.WanderingEyeEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.*;
-
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.ChorusEnergyBulletEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.ThrownEntity.EntityThrownEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.ThrownEntity.ThrownResurrectedKnightEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -50,33 +49,32 @@ public class ModEntities {
     public static final net.neoforged.neoforge.registries.DeferredRegister<EntityType<?>> ENTITY_TYPES = net.neoforged.neoforge.registries.DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MOD_ID);
     public static final Supplier<EntityType<SkeletosaurusEntity>> Skeletosaurus =
             ENTITY_TYPES.register("skeletosaurus", () -> EntityType.Builder.of(SkeletosaurusEntity::new, MobCategory.MONSTER)
-                    .sized(3f,3.5f).build("skeletosaurus"));
+                    .sized(3f, 3.5f).build("skeletosaurus"));
 
     public static final Supplier<EntityType<Overgrown_colossusEntity>> Overgrown_colossus =
             ENTITY_TYPES.register("overgrown_colossus", () -> EntityType.Builder.of(Overgrown_colossusEntity::new, MobCategory.MONSTER)
-                    .sized(2f,2.6f).build("overgrown_colossus"));
+                    .sized(2f, 2.6f).build("overgrown_colossus"));
 
     public static final Supplier<EntityType<EndersentEntity>> Endersent =
             ENTITY_TYPES.register("endersent", () -> EntityType.Builder.of(EndersentEntity::new, MobCategory.MONSTER)
-                    .sized(1f,6f).build("endersent"));
+                    .sized(1f, 6f).build("endersent"));
 
     public static final Supplier<EntityType<Warped_FungussusEntity>> Warped_Fungussus =
             ENTITY_TYPES.register("warped_fungussus", () -> EntityType.Builder.of(Warped_FungussusEntity::new, MobCategory.MONSTER)
-                    .sized(1f,2.5f).build("warped_fungussus"));
+                    .sized(1f, 2.5f).build("warped_fungussus"));
 
     public static final Supplier<EntityType<Lava_eaterEntity>> Lava_eater =
             ENTITY_TYPES.register("lava_eater", () -> EntityType.Builder.of(Lava_eaterEntity::new, MobCategory.MONSTER)
-                    .sized(2f,1.75f).build("lava_eater"));
+                    .sized(2f, 1.75f).build("lava_eater"));
 
     public static final Supplier<EntityType<Frostbitten_GolemEntity>> Frostbitten_Golem =
             ENTITY_TYPES.register("frostbitten_golem", () -> EntityType.Builder.of(Frostbitten_GolemEntity::new, MobCategory.MONSTER)
-                    .sized(1.5f,2.5f).build("frostbitten_golem")); //old width: 1f, old height: 1.5f
+                    .sized(1.5f, 2.5f).build("frostbitten_golem")); //old width: 1f, old height: 1.5f
 
 
     public static final Supplier<EntityType<Shulker_MimicEntity>> Shulker_Mimic =
             ENTITY_TYPES.register("shulker_mimic", () -> EntityType.Builder.of(Shulker_MimicEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1.5f,2.5f).build("shulker_mimic"));
-
+                    .sized(1.5f, 2.5f).build("shulker_mimic"));
 
 
     //Old Mimic
@@ -89,17 +87,17 @@ public class ModEntities {
 
     public static final Supplier<EntityType<ChoruslingEntity>> Chorusling =
             ENTITY_TYPES.register("chorusling", () -> EntityType.Builder.of(ChoruslingEntity::new, MobCategory.MONSTER)
-                    .sized(1f,2.5f).build("chorusling"));
+                    .sized(1f, 2.5f).build("chorusling"));
 
     public static final Supplier<EntityType<Withered_AbominationEntity>> Withered_Abomination =
             ENTITY_TYPES.register("withered_abomination", () -> EntityType.Builder.of(Withered_AbominationEntity::new, MobCategory.MONSTER)
-                    .sized(3,2.5f).build("withered_abomination"));
+                    .sized(3, 2.5f).build("withered_abomination"));
     public static final Supplier<EntityType<Chorus_BombEntity>> CHORUS_BOMB = ENTITY_TYPES.register("chorus_bomb",
             () -> EntityType.Builder.<Chorus_BombEntity>of(Chorus_BombEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
-                    .build( "chorus_bomb"));
+                    .build("chorus_bomb"));
 
     public static final Supplier<EntityType<Falling_CloudEntity>> FALLING_CLOUD = ENTITY_TYPES.register("falling_cloud",
             () -> EntityType.Builder.<Falling_CloudEntity>of((type, world) -> new Falling_CloudEntity(world), MobCategory.MISC)
@@ -119,34 +117,32 @@ public class ModEntities {
                     .build("falling_cloud_small"));
 
 
-
-
     public static final Supplier<EntityType<Ancient_GuardianEntity>> Ancient_Guardian =
             ENTITY_TYPES.register("ancient_guardian", () -> EntityType.Builder.of(Ancient_GuardianEntity::new, MobCategory.MONSTER)
-                    .sized(1.5f,2.25f).build("ancient_guardian"));
+                    .sized(1.5f, 2.25f).build("ancient_guardian"));
 
     public static final Supplier<EntityType<AmbusherEntity>> Ambusher =
             ENTITY_TYPES.register("ambusher", () -> EntityType.Builder.of(AmbusherEntity::new, MobCategory.MONSTER)
-                    .sized(1.5f,1.5f).build("ambusher"));
+                    .sized(1.5f, 1.5f).build("ambusher"));
 
     public static final Supplier<EntityType<SpikebugEntity>> Spiky_bug =
             ENTITY_TYPES.register("spiky_bug", () -> EntityType.Builder.of(SpikebugEntity::new, MobCategory.MONSTER)
-                    .sized(0.7f,0.5f).build("spiky_bug"));
+                    .sized(0.7f, 0.5f).build("spiky_bug"));
 
     public static final Supplier<EntityType<Cloud_GolemEntity>> Cloud_golem =
             ENTITY_TYPES.register("cloud_golem", () -> EntityType.Builder.of(Cloud_GolemEntity::new, MobCategory.MONSTER)
-                    .sized(1.5f,2.5f).build("cloud_golem")); //old width: 1f, old height: 1.5f
+                    .sized(1.5f, 2.5f).build("cloud_golem")); //old width: 1f, old height: 1.5f
 
     public static final Supplier<EntityType<HauntedKnightEntity>> Haunted_Knight =
             ENTITY_TYPES.register("haunted_knight", () -> EntityType.Builder.of(HauntedKnightEntity::new, MobCategory.MONSTER)
-                    .sized(1f,2.5f).build("haunted_knight")); //old width: 1f, old height: 1.5f
+                    .sized(1f, 2.5f).build("haunted_knight")); //old width: 1f, old height: 1.5f
     public static final Supplier<EntityType<HauntedGuardEntity>> Haunted_Guard =
             ENTITY_TYPES.register("haunted_guard", () -> EntityType.Builder.of(HauntedGuardEntity::new, MobCategory.MONSTER)
-                    .sized(1f,2.5f).build("haunted_guard")); //old width: 1f, old height: 1.5f
+                    .sized(1f, 2.5f).build("haunted_guard")); //old width: 1f, old height: 1.5f
 
     public static final Supplier<EntityType<PossessedPaladinEntity>> Posessed_Paladin =
             ENTITY_TYPES.register("posessed_paladin", () -> EntityType.Builder.of(PossessedPaladinEntity::new, MobCategory.MONSTER)
-                    .sized(1f,3f).build("posessed_paladin")); //old width: 1f, old height: 1.5f
+                    .sized(1f, 3f).build("posessed_paladin")); //old width: 1f, old height: 1.5f
 
 
     public static final Supplier<EntityType<ThrownHalbert>> SPEAR = ENTITY_TYPES.register("spear",
@@ -154,23 +150,23 @@ public class ModEntities {
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
-                    .build( "spear"));
+                    .build("spear"));
     public static final Supplier<EntityType<ThrownGoldenHalbert>> GOLDEN_HALBERT = ENTITY_TYPES.register("golden_halbert",
             () -> EntityType.Builder.<ThrownGoldenHalbert>of(ThrownGoldenHalbert::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
-                    .build( "golden_halbert"));
+                    .build("golden_halbert"));
 
 
     public static final Supplier<EntityType<FLivingArmorEntity>> Knights_Armor =
             ENTITY_TYPES.register("knights_armor", () -> EntityType.Builder.of(FLivingArmorEntity::new, MobCategory.MONSTER)
-                    .sized(1f,2.5f).build("knights_armor")); //old width: 1f, old height: 1.5f
+                    .sized(1f, 2.5f).build("knights_armor")); //old width: 1f, old height: 1.5f
 
 
     public static final Supplier<EntityType<FHauntedGuardEntity>> Guard =
             ENTITY_TYPES.register("guard", () -> EntityType.Builder.of(FHauntedGuardEntity::new, MobCategory.MONSTER)
-                    .sized(1f,2.5f).build("guard")); //old width: 1f, old height: 1.5f
+                    .sized(1f, 2.5f).build("guard")); //old width: 1f, old height: 1.5f
 
     //public static final EntityType<CameraShakeEntity> CAMERA_SHAKE = null;
 
@@ -179,28 +175,35 @@ public class ModEntities {
                     .sized(1F, 1F)
                     .build(ResourceLocation.fromNamespaceAndPath(MOD_ID, "camera_shake").toString()));
 
+    public static final Supplier<EntityType<DynamicCameraZoomEntity>> DYNAMIC_CAMERA_ZOOM = ENTITY_TYPES.register("dynamic_camera_zoom",
+            () -> EntityType.Builder.<DynamicCameraZoomEntity>of(DynamicCameraZoomEntity::new, MobCategory.MISC)
+                    .sized(1F, 1F)
+                    .build(ResourceLocation.fromNamespaceAndPath(MOD_ID, "dynamic_camera_zoom").toString()));
+
     public static final Supplier<EntityType<MossyGolemEntity>> Mossy_Golem =
             ENTITY_TYPES.register("mossy_golem", () -> EntityType.Builder.of(MossyGolemEntity::new, MobCategory.MONSTER)
-                    .sized(1f,1.2f).build("mossy_golem")); //old width: 1f, old height: 1.5f
+                    .sized(1f, 1.2f).build("mossy_golem")); //old width: 1f, old height: 1.5f
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }
+
     public static final Supplier<EntityType<SkeloraptorEntity>> Skeleraptor =
             ENTITY_TYPES.register("skeloraptor", () -> EntityType.Builder.of(SkeloraptorEntity::new, MobCategory.CREATURE)
-                    .sized(1.25f,2.6f).build("skeloraptor"));
+                    .sized(1.25f, 2.6f).build("skeloraptor"));
     public static final Supplier<EntityType<DuneSentinelEntity>> BlastCannon =
             ENTITY_TYPES.register("dune_sentinel", () -> EntityType.Builder.of(DuneSentinelEntity::new, MobCategory.CREATURE)
-                    .sized(1.25f,4f).build("dune_sentinel"));
+                    .sized(1.25f, 4f).build("dune_sentinel"));
     public static final Supplier<EntityType<BomberEntity>> Bomber =
             ENTITY_TYPES.register("bomber", () -> EntityType.Builder.of(BomberEntity::new, MobCategory.MONSTER)
-                    .sized(0.5f,1f).build("bomber"));
+                    .sized(0.5f, 1f).build("bomber"));
 
     public static final Supplier<EntityType<BombEntity>> BOMB = ENTITY_TYPES.register("bomb",
             () -> EntityType.Builder.<BombEntity>of(BombEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
-                    .build( "bomb"));
+                    .build("bomb"));
     public static final Supplier<EntityType<LMFallingBlockEntity>> LM_FALLING_BLOCK = ENTITY_TYPES.register(
             "lm_falling_block",
             () -> EntityType.Builder.<LMFallingBlockEntity>of(LMFallingBlockEntity::new, MobCategory.MISC)
@@ -260,7 +263,7 @@ public class ModEntities {
             .fireImmune()
             .build(MOD_ID + ":fire_breath"));
 
-    public static final Supplier<EntityType<SoulStrike>> SS= ENTITY_TYPES.register("soul_strike", () -> EntityType.Builder.<SoulStrike>of(SoulStrike::new, MobCategory.MISC)
+    public static final Supplier<EntityType<SoulStrike>> SS = ENTITY_TYPES.register("soul_strike", () -> EntityType.Builder.<SoulStrike>of(SoulStrike::new, MobCategory.MISC)
             .sized(1F, 1F)
             .clientTrackingRange(6)
             .updateInterval(2)
@@ -273,14 +276,14 @@ public class ModEntities {
             .updateInterval(2)
             .fireImmune()
             .build(MOD_ID + ":energy_beam"));
-    public static final Supplier<EntityType<LightningBeamEntity>> LightningBeam= ENTITY_TYPES.register("lightning_beam", () -> EntityType.Builder.<LightningBeamEntity>of(LightningBeamEntity::new, MobCategory.MISC)
+    public static final Supplier<EntityType<LightningBeamEntity>> LightningBeam = ENTITY_TYPES.register("lightning_beam", () -> EntityType.Builder.<LightningBeamEntity>of(LightningBeamEntity::new, MobCategory.MISC)
             .sized(1F, 1F)
             .clientTrackingRange(6)
             .updateInterval(2)
             .fireImmune()
             .build(MOD_ID + ":lightning_beam"));
 
-    public static final Supplier<EntityType<ElectricityEntity>> ELectr= ENTITY_TYPES.register("electric_burst", () -> EntityType.Builder.<ElectricityEntity>of(ElectricityEntity::new, MobCategory.MISC)
+    public static final Supplier<EntityType<ElectricityEntity>> ELectr = ENTITY_TYPES.register("electric_burst", () -> EntityType.Builder.<ElectricityEntity>of(ElectricityEntity::new, MobCategory.MISC)
             .sized(1F, 4F)
             .clientTrackingRange(6)
             .updateInterval(2)
@@ -292,19 +295,18 @@ public class ModEntities {
                     .sized(1F, 1F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
-                    .build( "cloud"));
+                    .build("cloud"));
 
     public static final Supplier<EntityType<LightningBoltEntity>> L = ENTITY_TYPES.register("lightning_strike", () -> EntityType.Builder.<LightningBoltEntity>of(LightningBoltEntity::
                     new, MobCategory.MISC)
             .sized(1F, 4F)
-                .clientTrackingRange(6)
-                .updateInterval(2)
-                .fireImmune()
-                .build(MOD_ID + ":lightning_strike"))
-    ;
+            .clientTrackingRange(6)
+            .updateInterval(2)
+            .fireImmune()
+            .build(MOD_ID + ":lightning_strike"));
 
-    public static final Supplier<EntityType<SoulHandEntity>> S= ENTITY_TYPES.register("soul_arm", () -> EntityType.Builder.<SoulHandEntity>
-            of(SoulHandEntity::new, MobCategory.MISC)
+    public static final Supplier<EntityType<SoulHandEntity>> S = ENTITY_TYPES.register("soul_arm", () -> EntityType.Builder.<SoulHandEntity>
+                    of(SoulHandEntity::new, MobCategory.MISC)
             .sized(1F, 1F)
             .clientTrackingRange(6)
             .updateInterval(2)
@@ -324,14 +326,14 @@ public class ModEntities {
             .updateInterval(2)
             .fireImmune()
             .build(MOD_ID + ":thunder_cloud"));
-    public static final Supplier<EntityType<PlayerTornado>> PLAYER_TORNADO= ENTITY_TYPES.register("player_tornado", () -> EntityType.Builder.<PlayerTornado>
+    public static final Supplier<EntityType<PlayerTornado>> PLAYER_TORNADO = ENTITY_TYPES.register("player_tornado", () -> EntityType.Builder.<PlayerTornado>
                     of(PlayerTornado::new, MobCategory.MISC)
             .sized(1.5F, 3F)
             .clientTrackingRange(6)
             .updateInterval(2)
             .fireImmune()
             .build(MOD_ID + ":player_tornado"));
-    public static final Supplier<EntityType<SmallCloudEntity>> SMALL_CLOUD= ENTITY_TYPES.register("small_cloud", () -> EntityType.Builder.<SmallCloudEntity>
+    public static final Supplier<EntityType<SmallCloudEntity>> SMALL_CLOUD = ENTITY_TYPES.register("small_cloud", () -> EntityType.Builder.<SmallCloudEntity>
                     of(SmallCloudEntity::new, MobCategory.MISC)
             .sized(1.5F, 3F)
             .clientTrackingRange(6)
@@ -342,19 +344,19 @@ public class ModEntities {
 
     public static final Supplier<EntityType<StratlingEntity>> Stratling =
             ENTITY_TYPES.register("stratling", () -> EntityType.Builder.of(StratlingEntity::new, MobCategory.MONSTER)
-                    .sized(1f,2f).build("stratling"));
+                    .sized(1f, 2f).build("stratling"));
     public static final Supplier<EntityType<HoveringHurricaneEntity>> HoverinngHurricane =
             ENTITY_TYPES.register("hovering_hurricane", () -> EntityType.Builder.of(HoveringHurricaneEntity::new, MobCategory.MONSTER)
-                    .sized(1f,2f).build("hovering_hurricane"));
+                    .sized(1f, 2f).build("hovering_hurricane"));
 
-    public static final Supplier<EntityType<ChorusEnergyBulletEntity>> CHORUS_BULLET= ENTITY_TYPES.register("chorus_energy_bullet", () -> EntityType.Builder.<ChorusEnergyBulletEntity>
+    public static final Supplier<EntityType<ChorusEnergyBulletEntity>> CHORUS_BULLET = ENTITY_TYPES.register("chorus_energy_bullet", () -> EntityType.Builder.<ChorusEnergyBulletEntity>
                     of(ChorusEnergyBulletEntity::new, MobCategory.MISC)
             .sized(1.5F, 3F)
             .clientTrackingRange(6)
             .updateInterval(2)
             .fireImmune()
             .build(MOD_ID + ":chorus_energy_bullet"));
-    public static final Supplier<EntityType<ChorusBreathEntity>> CHORUS_BREATH= ENTITY_TYPES.register("chorus_breath", () -> EntityType.Builder.<ChorusBreathEntity>
+    public static final Supplier<EntityType<ChorusBreathEntity>> CHORUS_BREATH = ENTITY_TYPES.register("chorus_breath", () -> EntityType.Builder.<ChorusBreathEntity>
                     of(ChorusBreathEntity::new, MobCategory.MISC)
             .sized(1F, 1F)
             .clientTrackingRange(6)
@@ -397,9 +399,9 @@ public class ModEntities {
             .build(MOD_ID + ":big_shulker_bullet"));
 
 
-   public static final Supplier<EntityType<TheObliteratorEntity>> THE_OBLITERATOR =
-     ENTITY_TYPES.register("the_obliterator", () -> EntityType.Builder.of(TheObliteratorEntity::new, MobCategory.MONSTER)
-             .fireImmune().sized(3f,5f).build("the_obliterator"));
+    public static final Supplier<EntityType<TheObliteratorEntity>> THE_OBLITERATOR =
+            ENTITY_TYPES.register("the_obliterator", () -> EntityType.Builder.of(TheObliteratorEntity::new, MobCategory.MONSTER)
+                    .fireImmune().sized(3f, 5f).build("the_obliterator"));
 
 
     public static final Supplier<EntityType<AnnihilationBombEntity>> ANNIHILATION_BOMB_ENTITY = ENTITY_TYPES.register("dimensional_bomb", () -> EntityType.Builder.
@@ -416,7 +418,7 @@ public class ModEntities {
             .updateInterval(2)
             .fireImmune()
             .build(MOD_ID + ":small_dimensional_bomb"));
-  public static final Supplier<EntityType<TheObliteratorCloneEntity>> THE_WARPED_ONE_DUPLICATE = ENTITY_TYPES.register("the_obliterator_clone", () -> EntityType.Builder.
+    public static final Supplier<EntityType<TheObliteratorCloneEntity>> THE_WARPED_ONE_DUPLICATE = ENTITY_TYPES.register("the_obliterator_clone", () -> EntityType.Builder.
                     <TheObliteratorCloneEntity>of(TheObliteratorCloneEntity::new, MobCategory.MISC)
             .sized(2F, 2.5F)
             .clientTrackingRange(6)
@@ -510,22 +512,22 @@ public class ModEntities {
 
     public static final Supplier<EntityType<FlamebornGuardEntity>> FLAMEBORN_GUARD =
             ENTITY_TYPES.register("flameborn_guard", () -> EntityType.Builder.of(FlamebornGuardEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1f,3f).build("flameborn_guard"));
+                    .sized(1f, 3f).build("flameborn_guard"));
 
     public static final Supplier<EntityType<FlamebornWarriorEntity>> FLAMEBORN_WARRIOR =
             ENTITY_TYPES.register("flameborn_warrior", () -> EntityType.Builder.of(FlamebornWarriorEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1f,3f).build("flameborn_warrior"));
+                    .sized(1f, 3f).build("flameborn_warrior"));
     public static final Supplier<EntityType<FlameDrifterEntity>> FLAME_DRIFTER =
             ENTITY_TYPES.register("flame_drifter", () -> EntityType.Builder.of(FlameDrifterEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1.5f,1.5f).build("flame_drifter"));
+                    .sized(1.5f, 1.5f).build("flame_drifter"));
 
     public static final Supplier<EntityType<AnnihilationPursuerEntity>> ANNIHILATION_PURSUER =
             ENTITY_TYPES.register("annihilation_pursuer", () -> EntityType.Builder.of(AnnihilationPursuerEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1.5f,5f).build("annihilation_pursuer"));
+                    .sized(1.5f, 5f).build("annihilation_pursuer"));
 
     public static final Supplier<EntityType<WanderingEyeEntity>> WANDERING_EYE =
             ENTITY_TYPES.register("wandering_eye", () -> EntityType.Builder.of(WanderingEyeEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1f,1.75f).build("wandering_eye"));
+                    .sized(1f, 1.75f).build("wandering_eye"));
 
 
     public static final Supplier<EntityType<GravityBigShulkerEntity>> GRAVITY_BIG_SHULKER_BULLET = ENTITY_TYPES.register("gravity_big_shulker_bullet", () -> EntityType.Builder.
@@ -574,36 +576,36 @@ public class ModEntities {
             .build(MOD_ID + ":soul_shield"));
     public static final Supplier<EntityType<BeheadedKnightEntity>> BEHEADED_KNIGHT =
             ENTITY_TYPES.register("beheaded_knight", () -> EntityType.Builder.of(BeheadedKnightEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1.5f,4f).build("beheaded_knight"));
+                    .sized(1.5f, 4f).build("beheaded_knight"));
     public static final Supplier<EntityType<SoulJavelinEntity>> SOUL_JAVELIN = ENTITY_TYPES.register("soul_javelin",
             () -> EntityType.Builder.<SoulJavelinEntity>of(SoulJavelinEntity::new, MobCategory.MISC)
                     .sized(1F, 1F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
-                    .build( "soul_javelin"));
+                    .build("soul_javelin"));
     public static final Supplier<EntityType<SoulTridentEntity>> SOUL_TRIDENT = ENTITY_TYPES.register("soul_trident",
             () -> EntityType.Builder.<SoulTridentEntity>of(SoulTridentEntity::new, MobCategory.MISC)
                     .sized(1F, 1F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
-                    .build( "soul_trident"));
+                    .build("soul_trident"));
 
     public static final Supplier<EntityType<ResurrectedKnightEntity>> RESURRECTED_KNIGHT =
             ENTITY_TYPES.register("resurrected_knight", () -> EntityType.Builder.of(ResurrectedKnightEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1.25f,3f).build("resurrected_knight"));
+                    .sized(1.25f, 3f).build("resurrected_knight"));
 
 
     public static final Supplier<EntityType<FracturedApostleEntity>> FRACTURED_APOSTLE =
             ENTITY_TYPES.register("fractured_apostle", () -> EntityType.Builder.of(FracturedApostleEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1.25f,2f).build("fractured_apostle"));
+                    .sized(1.25f, 2f).build("fractured_apostle"));
 
     public static final Supplier<EntityType<FracturedEntity>> FRACTURED =
             ENTITY_TYPES.register("fractured", () -> EntityType.Builder.of(FracturedEntity::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1f,2f).build("fractured"));
+                    .sized(1f, 2f).build("fractured"));
 
     public static final Supplier<EntityType<ThrownResurrectedJavelin>> RESURRECTED_JAVELIN =
             ENTITY_TYPES.register("resurrected_javelin", () -> EntityType.Builder.<ThrownResurrectedJavelin>of(ThrownResurrectedJavelin::new, MobCategory.MONSTER).fireImmune()
-                    .sized(1f,1f).build("resurrected_javelin"));
+                    .sized(1f, 1f).build("resurrected_javelin"));
 }
 
 

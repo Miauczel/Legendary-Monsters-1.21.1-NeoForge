@@ -45,7 +45,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -154,9 +153,10 @@ public class LegendaryMonsters {
 
     @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
-        public ClientModEvents(){
+        public ClientModEvents() {
             proxy = new ClientProxy();
         }
+
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             proxy.clientInit();
@@ -212,6 +212,7 @@ public class LegendaryMonsters {
             EntityRenderers.register(ModEntities.FIRE.get(), NoRendererEntityRenderer::new);
             EntityRenderers.register(ModEntities.FIRE_B.get(), NoRendererEntityRenderer::new);
 
+            EntityRenderers.register(ModEntities.DYNAMIC_CAMERA_ZOOM.get(), NoRendererEntityRenderer::new);
             EntityRenderers.register(ModEntities.ELectr.get(), beamSpawner::new);
 
             EntityRenderers.register(ModEntities.LightningBeam.get(), context -> new LightningBeamRenderer(context, 0.8f));

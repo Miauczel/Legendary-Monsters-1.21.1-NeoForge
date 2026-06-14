@@ -4,12 +4,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.miauczel.legendary_monsters.ClientProxy;
 import net.miauczel.legendary_monsters.LegendaryMonsters;
-import net.miauczel.legendary_monsters.client.ModBlockEntityWithoutLevelRenderer;
 import net.miauczel.legendary_monsters.client.RenderUtils;
 import net.miauczel.legendary_monsters.client.event.gui.CustomBossBar;
 import net.miauczel.legendary_monsters.config.ModConfig;
 import net.miauczel.legendary_monsters.effect.ModEffects;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.CameraShakeEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.DynamicCameraZoomEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.IAnimatedBoss.PossessedPaladin.PossessedPaladinEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.IAnimatedBoss.TheObliterator.TheObliteratorEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Pets.SkeloraptorEntity;
@@ -121,11 +121,11 @@ public class ClientEvent {
 
     @SubscribeEvent
     public static void setZoom(CalculateDetachedCameraDistanceEvent event) {
+
         Entity camEntity = Minecraft.getInstance().getCameraEntity();
         if (camEntity == null) return;
-
-        if (!camEntity.isPassenger()) return;
         if (!event.getCamera().isDetached()) return;
+        if (!camEntity.isPassenger()) return;
 
         Entity vehicle = camEntity.getVehicle();
         if (vehicle == null) return;
@@ -139,10 +139,32 @@ public class ClientEvent {
                 || vehicle instanceof PossessedPaladinEntity
                 || vehicle instanceof TheObliteratorEntity) zoom = 8.0F;
         else return;
+
+
         event.setDistance(zoom);
 
     }
 
+    @SubscribeEvent
+    public static void setDynamicZoom(CalculateDetachedCameraDistanceEvent event) {
+        Entity camEntity = Minecraft.getInstance().getCameraEntity();
+        Camera camera = event.getCamera();
+        if (camEntity == null) return;
+
+        if (!event.getCamera().isDetached()) return;
+
+        if (ModConfig.MOB_CONFIG.allowCameraShake.get() && !Minecraft.getInstance().isPaused()) {
+
+            for (DynamicCameraZoomEntity cameraZoom : camEntity.level().getEntitiesOfClass(DynamicCameraZoomEntity.class, camEntity.getBoundingBox().inflate(20, 20, 20))) {
+
+                if (cameraZoom.distanceTo(camEntity) < cameraZoom.getRadius()){
+                    float finalZoom = Mth.lerp(camera.getPartialTickTime(), cameraZoom.getZoomIncrementOld(), cameraZoom.getZoomIncrement());
+                            event.setDistance(4 + finalZoom);
+                }
+
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void onClientTickPre(ClientTickEvent.Post event) {
