@@ -9,7 +9,9 @@
     "StructureTemplateMixin",
     "StructureProcessorAccessor",
     "IForgeItemMixin",
-    "PlayerMixin",
+    "CameraInvoker",
+    "PlayerMixin"
+
   ],
   "injectors": {
     "defaultRequire": 1

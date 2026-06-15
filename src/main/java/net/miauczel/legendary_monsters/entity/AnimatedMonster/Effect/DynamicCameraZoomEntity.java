@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -17,32 +18,30 @@ public class DynamicCameraZoomEntity extends INoRendererEntity {
     private static final EntityDataAccessor<Integer> DURATION = SynchedEntityData.defineId(DynamicCameraZoomEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ZOOM_FREEZE = SynchedEntityData.defineId(DynamicCameraZoomEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> SET_ZOOM_SPEED = SynchedEntityData.defineId(DynamicCameraZoomEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Boolean> CAMERA_LOCKED = SynchedEntityData.defineId(DynamicCameraZoomEntity.class, EntityDataSerializers.BOOLEAN);
 
     public DynamicCameraZoomEntity(EntityType<?> type, Level world) {
         super(type, world);
     }
 
-    public DynamicCameraZoomEntity(Level world, Vec3 position, float radius, float magnitude, int duration, int zoomFreeze, float zoomSpeed) {
+    public DynamicCameraZoomEntity(Level world, Vec3 position, float radius, float magnitude, int duration, int zoomFreeze, float zoomSpeed, boolean cameraLocked, LivingEntity cameraEntity) {
         super(ModEntities.DYNAMIC_CAMERA_ZOOM.get(), world);
         setRadius(radius);
         setMaxZoom(magnitude);
         setDuration(duration);
         setZoomSpeed(zoomSpeed);
         setZoomFreeze(zoomFreeze);
+        setCameraEntity(cameraEntity);
+        setCameraLocked(cameraLocked);
         setPos(position.x(), position.y(), position.z());
     }
 
-    public float getZoomIncrement() {
-        return zoomIncrement * 0.1f;
-    }
+    public LivingEntity cameraEntity;
 
-    public float getZoomIncrementOld() {
-        return zoomIncrementOld * 0.1f;
-    }
 
-    public float zoomIncrement = 0;
+    public float zoomIncrement;
 
-    public float zoomIncrementOld = 0;
+    public float zoomIncrementOld;
 
     @Override
     public void tick() {
@@ -54,7 +53,7 @@ public class DynamicCameraZoomEntity extends INoRendererEntity {
         } else if (zoomIncrement > 0 && tickCount > getDuration() + getZoomFreeze()) {
             zoomIncrement -= getZoomSpeed();
         }
-     //   System.out.println("getIncrement: " + getZoomIncrement());
+        //   System.out.println("getIncrement: " + getZoomIncrement());
         if (tickCount > getDuration() + getZoomFreeze() && zoomIncrement == 0) discard();
 
     }
@@ -66,6 +65,7 @@ public class DynamicCameraZoomEntity extends INoRendererEntity {
         builder.define(ZOOM_FREEZE, 0);
         builder.define(DURATION, 0);
         builder.define(SET_ZOOM_SPEED, 5f);
+        builder.define(CAMERA_LOCKED, false);
     }
 
     public float getRadius() {
@@ -108,12 +108,37 @@ public class DynamicCameraZoomEntity extends INoRendererEntity {
         getEntityData().set(SET_ZOOM_SPEED, fadeDuration);
     }
 
+    public void setCameraLocked(boolean cameraLocked) {
+        getEntityData().set(CAMERA_LOCKED, cameraLocked);
+    }
+
+    public boolean getCameraLocked() {
+        return getEntityData().get(CAMERA_LOCKED);
+    }
+
+    public void setCameraEntity(LivingEntity cameraEntity) {
+        this.cameraEntity = cameraEntity;
+    }
+
+    public LivingEntity getCameraEntity() {
+        return cameraEntity;
+    }
+
+    public float getZoomIncrement() {
+        return zoomIncrement * 0.1f;
+    }
+
+    public float getZoomIncrementOld() {
+        return zoomIncrementOld * 0.1f;
+    }
+
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
         setRadius(compound.getFloat("radius"));
         setMaxZoom(compound.getFloat("zoom"));
         setDuration(compound.getInt("duration"));
         setZoomSpeed(compound.getInt("zoomSpeed"));
+        setCameraLocked(compound.getBoolean("cameraLocked"));
         setZoomFreeze(compound.getInt("zoomFreeze"));
         tickCount = compound.getInt("ticks_existed");
     }
@@ -125,12 +150,13 @@ public class DynamicCameraZoomEntity extends INoRendererEntity {
         compound.putInt("duration", getDuration());
         compound.putFloat("zoomSpeed", getZoomSpeed());
         compound.putInt("zoomFreeze", getZoomFreeze());
+        compound.putBoolean("cameraLocked", getCameraLocked());
         compound.putInt("ticks_existed", tickCount);
     }
 
-    public static void dynamicCameraZoom(Level world, Vec3 position, float radius, float maxZoom, int duration, int zoomFreeze, float zoomSpeed) {
+    public static void dynamicCameraZoom(Level world, Vec3 position, float radius, float maxZoom, int duration, int zoomFreeze, float zoomSpeed, boolean cameraLocked, LivingEntity cameraEntity) {
         if (!world.isClientSide) {
-            DynamicCameraZoomEntity zoomEntity = new DynamicCameraZoomEntity(world, position, radius, maxZoom, duration, zoomFreeze, zoomSpeed);
+            DynamicCameraZoomEntity zoomEntity = new DynamicCameraZoomEntity(world, position, radius, maxZoom, duration, zoomFreeze, zoomSpeed, cameraLocked, cameraEntity);
             world.addFreshEntity(zoomEntity);
         }
     }
