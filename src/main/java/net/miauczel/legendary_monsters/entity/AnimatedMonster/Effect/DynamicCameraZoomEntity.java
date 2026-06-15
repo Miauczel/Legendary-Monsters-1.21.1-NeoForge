@@ -56,7 +56,6 @@ public class DynamicCameraZoomEntity extends INoRendererEntity {
     @Override
     public void tick() {
         super.tick();
-
         zoomIncrementOld = zoomIncrement;
         if (tickCount < getDuration() && zoomIncrement * 0.1 < getMaxZoom()) {
             zoomIncrement += getZoomSpeed();

@@ -1907,7 +1907,6 @@ public class PossessedPaladinEntity extends IAnimatedBoss {
             }
         }
         if (getAttackState() == 24) {
-            if (attackTicks == 1)
             //    DynamicCameraZoomEntity.dynamicCameraZoom(level(), position(), 50, 4, 10, 20, 5);
             if (attackTicks == 4) {
                 SideAreaAttack(3, 3, 180, 0, 0, 24, 100, ModSounds.EMPTY, 0, true, 1.5f);
@@ -1926,7 +1925,6 @@ public class PossessedPaladinEntity extends IAnimatedBoss {
             if (attackTicks == 1) {
                 telegraphFadeAway.resetTimer();
             }
-            if (attackTicks == 1)
              //   DynamicCameraZoomEntity.dynamicCameraZoom(level(), position(), 50, 4, 40, 40, 5);
             if (attackTicks == 4) {
                 SideAreaAttack(3, 3, 180, 0, 0, 24, 100, ModSounds.EMPTY, 0, true, 1.5f);
