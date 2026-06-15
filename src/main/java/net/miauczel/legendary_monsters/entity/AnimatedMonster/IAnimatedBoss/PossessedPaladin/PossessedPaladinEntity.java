@@ -13,6 +13,7 @@ import net.miauczel.legendary_monsters.entity.AnimatedMonster.AnimatedEntity.Fal
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.AnimatedEntity.SoulBladeEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.AnimatedEntity.SoulShieldEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.CameraShakeEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.DynamicCameraZoomEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.IAnimatedBoss.PossessedPaladin.goal.*;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.OriginClasses.IAnimatedBoss;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.*;
@@ -900,7 +901,7 @@ public class PossessedPaladinEntity extends IAnimatedBoss {
     public void throwSoulTrident(LivingEntity pTarget, float v) {
         SoulTridentEntity soulTrident = new SoulTridentEntity(this.level(), this, new ItemStack(Items.TRIDENT));
 
-        soulTrident.setPos(getX(),getY() + 2,getZ());
+        soulTrident.setPos(getX(), getY() + 2, getZ());
         double d0 = pTarget.getX() - this.getX();
         double d1 = pTarget.getY(0.3333333333333333D) - soulTrident.getY();
         double d2 = pTarget.getZ() - this.getZ();
@@ -2444,6 +2445,8 @@ public class PossessedPaladinEntity extends IAnimatedBoss {
                 SideAreaAttack(3.5f, 3.5f, 180, 0, 0, 18, 100, ModSounds.EMPTY, 1, false, 1);
             }
             if (attackTicks == landSlam - 36) setNoGravity(true);
+            if (attackTicks == landSlam - 30)
+                DynamicCameraZoomEntity.dynamicCameraZoom(level(), position(), 50, 4, 30, 55, 5,false,this);
             if (attackTicks >= landSlam - 36 && attackTicks <= landSlam - 25) {
                 setDeltaMovement(getDeltaMovement().x, 0.35f, getDeltaMovement().z);
                 //   attractParticles(ModParticles.GHOSTLY_SOUL.get(),7,5,0,0,0,0,0,5,0.1f);
@@ -3112,7 +3115,7 @@ public class PossessedPaladinEntity extends IAnimatedBoss {
                         if (getAttackState() == 5) {
                             entityHit.addEffect(new MobEffectInstance(ModEffects.STUN, getStunDuration(), 0));
                         }
-                        applyStackingEffect(entityHit,ModEffects.SOUL_FRACTURE, 1, 4, MathUtils.toTicks(10));
+                        applyStackingEffect(entityHit, ModEffects.SOUL_FRACTURE, 1, 4, MathUtils.toTicks(10));
                         playSound(soundEvent, 1, pitch);
                     }
                     if (entityHit instanceof Player && entityHit.isBlocking() && brokenShieldTicks > 0) {

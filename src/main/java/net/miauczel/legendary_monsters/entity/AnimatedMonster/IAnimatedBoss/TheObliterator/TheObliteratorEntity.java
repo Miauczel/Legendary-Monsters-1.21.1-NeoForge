@@ -9,6 +9,7 @@ import net.miauczel.legendary_monsters.effect.ModEffects;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.AnimatedEntity.TheObliteratorCloneEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.AnimatedEntity.TheObliteratorCloneWithArmsEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.CameraShakeEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.DynamicCameraZoomEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.IAnimatedBoss.TheObliterator.goals.*;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.Chorusling.EndersentEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.OriginClasses.AbstractChorusling;
@@ -4554,7 +4555,7 @@ public class TheObliteratorEntity extends IAnimatedBoss {
                 if (!getIsQuadBeamRight()) renderProgress--;
             }
             if (attackTicks == 9) {
-
+                DynamicCameraZoomEntity.dynamicCameraZoom(level(),position(),50,4,40,40,5,false,this);
 
                 playSound(ModSounds.ANNIHILATION_LASER_CHARGE.get(), 3, 1f);
                 if (target != null) {
@@ -4749,7 +4750,7 @@ public class TheObliteratorEntity extends IAnimatedBoss {
                 level().addFreshEntity(annihilationPortalEntity);
             }
             if (attackTicks == 21) {
-
+                DynamicCameraZoomEntity.dynamicCameraZoom(level(),position(),50,4,40,40,5,true,this);
                 doPortalEffect(15, 2, 5, 7, 3.5f, 50, 15);
                 doPortalEffect(8, 2, 5, 7, 3.5f, 50, 15);
             }
