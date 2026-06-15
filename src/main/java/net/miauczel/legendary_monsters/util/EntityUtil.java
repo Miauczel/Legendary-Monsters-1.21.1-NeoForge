@@ -77,12 +77,13 @@ public class EntityUtil {
             player.getCooldowns().addCooldown(itemStack.getItem(), 20);
             player.stopUsingItem();
         }
-        MobEffectInstance mobEffectInstance = player.getEffect(MobEffects.DAMAGE_RESISTANCE);
-        if (player.hasEffect(MobEffects.DAMAGE_RESISTANCE) && mobEffectInstance != null && mobEffectInstance.getAmplifier() > 1) {
-            player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
-            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, mobEffectInstance.getDuration(), 0));
+        if (ModConfig.MOB_CONFIG.BossesReduceResistanceEffect.get()) {
+            MobEffectInstance mobEffectInstance = player.getEffect(MobEffects.DAMAGE_RESISTANCE);
+            if (player.hasEffect(MobEffects.DAMAGE_RESISTANCE) && mobEffectInstance != null && mobEffectInstance.getAmplifier() > 1) {
+                player.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+                player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, mobEffectInstance.getDuration(), 0));
+            }
         }
-
     }
 
 
