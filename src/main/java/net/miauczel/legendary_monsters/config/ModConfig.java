@@ -337,6 +337,7 @@ public class ModConfig {
         public final ModConfigSpec.BooleanValue BossesReduceResistanceEffect;
 
         public final ModConfigSpec.BooleanValue allowCameraShake;
+        public final ModConfigSpec.BooleanValue allowCameraZoom;
 
         public final ModConfigSpec.BooleanValue Duneprojectile;
 
@@ -782,6 +783,9 @@ public class ModConfig {
             allowCameraShake = builder
                     .comment("allow Camera Shake")
                     .define("Allow Camera Shake", true);
+            allowCameraZoom = builder
+                    .comment("allow Camera Zoom")
+                    .define("Allow Camera Zoom", true);
             MiniBossDamageCap = builder
                     .comment("MiniBoss DamageCap")
                     .defineInRange("MiniBoss DamageCap", 21, 0, 1000);

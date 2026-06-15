@@ -18,6 +18,7 @@ import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.SpaceStation.
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.BigShulkerBulletEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.ThrownEntity.EntityThrownEntity;
 import net.miauczel.legendary_monsters.item.ModItems;
+import net.miauczel.legendary_monsters.mixin.CameraInvoker;
 import net.minecraft.client.Camera;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -29,6 +30,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -145,21 +147,46 @@ public class ClientEvent {
 
     }
 
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void setCameraLockedOn(ViewportEvent.ComputeCameraAngles event) {
+        Entity camEntity = Minecraft.getInstance().getCameraEntity();
+        CameraInvoker camera = (CameraInvoker) event.getCamera();
+        if (camEntity == null) return;
+        if (!event.getCamera().isDetached()) return;
+        for (DynamicCameraZoomEntity cameraZoom : camEntity.level().getEntitiesOfClass(DynamicCameraZoomEntity.class, camEntity.getBoundingBox().inflate(20, 20, 20))) {
+
+            LivingEntity boss = cameraZoom.getCameraEntity();
+            if (cameraZoom.distanceTo(camEntity) < cameraZoom.getRadius() && cameraZoom.getCameraLocked()) {
+                double dx = cameraZoom.getX() - camEntity.getX();
+                double dy = cameraZoom.getY() - camEntity.getY();
+                double dz = cameraZoom.getZ() - camEntity.getZ();
+                double horizontalDistance = Math.sqrt(dx * dx + dz * dz);
+                double pitch = Math.toDegrees(Math.atan2(dy, horizontalDistance));
+                double yaw = Math.toDegrees(Math.atan2(dz, dx));
+               /// event.setPitch((float) pitch);
+              ///  event.setYaw((float) yaw);
+               // camera.lm$setPosition(cameraZoom.getX(), cameraZoom.getY(), cameraZoom.getZ());
+
+            }
+
+        }
+
+    }
+
     @SubscribeEvent
     public static void setDynamicZoom(CalculateDetachedCameraDistanceEvent event) {
         Entity camEntity = Minecraft.getInstance().getCameraEntity();
         Camera camera = event.getCamera();
         if (camEntity == null) return;
-
         if (!event.getCamera().isDetached()) return;
 
-        if (ModConfig.MOB_CONFIG.allowCameraShake.get() && !Minecraft.getInstance().isPaused()) {
+        if (ModConfig.MOB_CONFIG.allowCameraZoom.get() && !Minecraft.getInstance().isPaused()) {
 
             for (DynamicCameraZoomEntity cameraZoom : camEntity.level().getEntitiesOfClass(DynamicCameraZoomEntity.class, camEntity.getBoundingBox().inflate(20, 20, 20))) {
 
-                if (cameraZoom.distanceTo(camEntity) < cameraZoom.getRadius()){
+                if (cameraZoom.distanceTo(camEntity) < cameraZoom.getRadius() && camEntity instanceof LivingEntity living) {
                     float finalZoom = Mth.lerp(camera.getPartialTickTime(), cameraZoom.getZoomIncrementOld(), cameraZoom.getZoomIncrement());
-                            event.setDistance(4 + finalZoom);
+                    event.setDistance((4 * living.getScale()) + finalZoom);
                 }
 
             }
