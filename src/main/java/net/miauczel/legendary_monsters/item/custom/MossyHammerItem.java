@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import net.miauczel.legendary_monsters.Particle.custom.Circle;
 import net.miauczel.legendary_monsters.config.ModConfig;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.CameraShakeEntity;
+import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.DynamicCameraZoomEntity;
 import net.miauczel.legendary_monsters.item.ModToolTiers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -76,6 +77,7 @@ public class MossyHammerItem extends PickaxeItem {
 
                 }
                 player.playSound(SoundEvents.DRAGON_FIREBALL_EXPLODE, 1, 1);
+             //   DynamicCameraZoomEntity.dynamicCameraZoom(player.level(),player.position(),10,10,10,10,10,true,null);
                 CameraShakeEntity.cameraShake(player.level(), player.position(), 5, 0.15f, 5, 5);
                 player.getCooldowns().addCooldown(this, 60);
 

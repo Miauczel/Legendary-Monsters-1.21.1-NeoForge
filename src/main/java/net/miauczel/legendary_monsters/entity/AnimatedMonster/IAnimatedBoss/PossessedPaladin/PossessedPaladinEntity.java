@@ -1907,6 +1907,8 @@ public class PossessedPaladinEntity extends IAnimatedBoss {
             }
         }
         if (getAttackState() == 24) {
+            if (attackTicks == 1)
+            //    DynamicCameraZoomEntity.dynamicCameraZoom(level(), position(), 50, 4, 10, 20, 5);
             if (attackTicks == 4) {
                 SideAreaAttack(3, 3, 180, 0, 0, 24, 100, ModSounds.EMPTY, 0, true, 1.5f);
                 playSound(SoundEvents.TOTEM_USE, 1, 0.75f);
@@ -1924,6 +1926,8 @@ public class PossessedPaladinEntity extends IAnimatedBoss {
             if (attackTicks == 1) {
                 telegraphFadeAway.resetTimer();
             }
+            if (attackTicks == 1)
+             //   DynamicCameraZoomEntity.dynamicCameraZoom(level(), position(), 50, 4, 40, 40, 5);
             if (attackTicks == 4) {
                 SideAreaAttack(3, 3, 180, 0, 0, 24, 100, ModSounds.EMPTY, 0, true, 1.5f);
                 playSound(SoundEvents.TOTEM_USE, 1, 0.75f);
@@ -2446,7 +2450,7 @@ public class PossessedPaladinEntity extends IAnimatedBoss {
             }
             if (attackTicks == landSlam - 36) setNoGravity(true);
             if (attackTicks == landSlam - 30)
-                DynamicCameraZoomEntity.dynamicCameraZoom(level(), position(), 50, 4, 30, 55, 5,false,this);
+                DynamicCameraZoomEntity.dynamicCameraZoom(level(), position(), 50, 4, 30, 55, 5, false, this);
             if (attackTicks >= landSlam - 36 && attackTicks <= landSlam - 25) {
                 setDeltaMovement(getDeltaMovement().x, 0.35f, getDeltaMovement().z);
                 //   attractParticles(ModParticles.GHOSTLY_SOUL.get(),7,5,0,0,0,0,0,5,0.1f);
