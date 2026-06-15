@@ -12,13 +12,10 @@ import net.miauczel.legendary_monsters.util.MathUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
@@ -107,7 +104,7 @@ public class AnnihilationBeamEntity extends Entity {
     }
 
     public float getFollowSpeed() {
-        return  entityData.get(FOLLOW_SPEED);
+        return entityData.get(FOLLOW_SPEED);
     }
 
     public void setIsQuad(boolean isQuad) {
@@ -284,25 +281,29 @@ public class AnnihilationBeamEntity extends Entity {
         return RADIUS;
     }
 
+    public float yawOld;
+
     @Override
     public void tick() {
         super.tick();
-      //  System.out.println("FLW: " +getFollowSpeed());
+        //  System.out.println("FLW: " +getFollowSpeed());
         // System.out.println("turnBackMoment: " + turnBackMoment());
 
         // System.out.println("Duration: " + getDuration());
         // System.out.println("YRot: " + getYRot());
+        yawOld = getYaw();
         if (getIsQuad()) {
+
             if (tickCount >= turnBackMoment()) {
 
-               // setFollowSpeed(Mth.clamp(getFollowSpeed() +0.2f,1,4));
+                // setFollowSpeed(Mth.clamp(getFollowSpeed() +0.2f,1,4));
                 float newYawDeg = Mth.wrapDegrees(getIsTurningRightFirst() ? getYaw() + getFollowSpeed() : getYaw() - getFollowSpeed());
                 setYaw(newYawDeg);
                 this.setYRot(newYawDeg);
                 renderYaw = (float) Math.toRadians(newYawDeg);
             } else {
 
-            //    setFollowSpeed(Mth.clamp(getFollowSpeed() -0.1f,1,4));
+                //    setFollowSpeed(Mth.clamp(getFollowSpeed() -0.1f,1,4));
                 float newYawDeg = Mth.wrapDegrees(getIsTurningRightFirst() ? getYaw() - getFollowSpeed() : getYaw() + getFollowSpeed());
                 setYaw(newYawDeg);
                 this.setYRot(newYawDeg);
@@ -405,24 +406,23 @@ public class AnnihilationBeamEntity extends Entity {
             }
 
 
-
             if (!level().isClientSide) {
                 for (LivingEntity target : hit) {
                     if (caster != null) {
 
                         if (!this.caster.isAlliedTo(target) && target != caster) {
                             if (!(target instanceof TamableAnimal animal && animal.getOwner() == caster)) {
-                            float damage = (float) (caster instanceof Player ?
-                                    (this.getDamage() + target.getMaxHealth() * (getHpDamage() * 0.01)) :
-                                    (this.getDamage() + target.getMaxHealth() * (getHpDamage() * 0.01)) * ModConfig.MOB_CONFIG.TheObliteratorDamageMutliplier.get());
-                            boolean flag = target.hurt(ModDamageTypes.causeAnnihilationDamage(this, caster),damage);
-                            if (flag) {
-                                TheObliteratorUtils.applyAnnihilationEffect(target, ModEffects.ANNIHILATION,1,false);
-                                if (caster instanceof Mob) {
-                                }
+                                float damage = (float) (caster instanceof Player ?
+                                        (this.getDamage() + target.getMaxHealth() * (getHpDamage() * 0.01)) :
+                                        (this.getDamage() + target.getMaxHealth() * (getHpDamage() * 0.01)) * ModConfig.MOB_CONFIG.TheObliteratorDamageMutliplier.get());
+                                boolean flag = target.hurt(ModDamageTypes.causeAnnihilationDamage(this, caster), damage);
+                                if (flag) {
+                                    TheObliteratorUtils.applyAnnihilationEffect(target, ModEffects.ANNIHILATION, 1, false);
+                                    if (caster instanceof Mob) {
+                                    }
 
-                                target.setRemainingFireTicks(40);
-                            }
+                                    target.setRemainingFireTicks(40);
+                                }
 
                             }
                         }
@@ -433,7 +433,7 @@ public class AnnihilationBeamEntity extends Entity {
         if (tickCount - 20 > getDuration() && getIsQuad()) {
             on = false;
 
-        }else {
+        } else {
             on = true;
         }
     }
@@ -449,7 +449,6 @@ public class AnnihilationBeamEntity extends Entity {
         }
 
     }
-
 
 
     @Override
@@ -561,7 +560,7 @@ public class AnnihilationBeamEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag nbt) {
-        nbt.putInt("int",getDuration());
+        nbt.putInt("int", getDuration());
     }
 
     @Override
@@ -590,20 +589,22 @@ public class AnnihilationBeamEntity extends Entity {
             }
         }
     }
+
     private void calculateFakeEndPos() {
         if (getIsQuad()) {
             float r = (caster instanceof Player ? entityData.get(B_RADIUS) / 2 : entityData.get(B_RADIUS));
-                double yawRad = Math.toRadians(getYaw());
-                double pitchRad = Math.toRadians(getPitch());
-                endPosX = getX() + r * Math.cos(yawRad) * Math.cos(pitchRad);
-                endPosZ = getZ() + r * Math.sin(yawRad) * Math.cos(pitchRad);
-                endPosY = getY() + r * Math.sin(pitchRad);
-            }
+            double yawRad = Math.toRadians(getYaw());
+            double pitchRad = Math.toRadians(getPitch());
+            endPosX = getX() + r * Math.cos(yawRad) * Math.cos(pitchRad);
+            endPosZ = getZ() + r * Math.sin(yawRad) * Math.cos(pitchRad);
+            endPosY = getY() + r * Math.sin(pitchRad);
+        }
     }
 
     private Vec3 endPos() {
         return new Vec3(endPosX, endPosY, endPosZ);
     }
+
     public LaserbeamHitResult raytraceEntities(Level world, Vec3 from, Vec3 to, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
         LaserbeamHitResult result = new LaserbeamHitResult();
         result.setBlockHit(world.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)));
