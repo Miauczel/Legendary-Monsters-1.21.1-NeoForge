@@ -51,7 +51,6 @@ public class DynamicCameraZoomEntity extends INoRendererEntity {
 
 
     public float zoomIncrement;
-
     public float zoomIncrementOld;
 
     @Override
