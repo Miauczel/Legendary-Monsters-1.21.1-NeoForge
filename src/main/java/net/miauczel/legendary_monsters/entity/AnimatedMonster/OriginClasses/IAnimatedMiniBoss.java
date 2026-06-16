@@ -157,6 +157,8 @@ public class IAnimatedMiniBoss extends IAnimatedMob {
     @Override
     public void onAddedToLevel() {
         super.onAddedToLevel();
+        if (entityData.get(SPAWN_POS) == BlockPos.ZERO) setSpawnBlockPos(this.blockPosition());
+
         setPersistenceRequired();
     }
 

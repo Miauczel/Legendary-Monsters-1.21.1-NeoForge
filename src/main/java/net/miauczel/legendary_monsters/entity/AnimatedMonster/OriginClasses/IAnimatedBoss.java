@@ -110,6 +110,7 @@ public class IAnimatedBoss extends IAnimatedMonster {
 
     @Override
     public void tick() {
+        if (entityData.get(SPAWN_POS) == BlockPos.ZERO) setSpawnBlockPos(this.blockPosition());
         if (!this.level().isClientSide()) {
           //  this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(getMaxHealth());
             if (hurtCD > 0) hurtCD--;
@@ -294,7 +295,7 @@ public class IAnimatedBoss extends IAnimatedMonster {
         if (reducedDamage()) {
             amount *= Mth.clamp(toPercent(reducedDamageTicks), 0.5f, amount);
         }
-        if (source.is(DamageTypes.FALL) || source.is(DamageTypes.DROWN) || source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypes.FREEZE) || source.is(DamageTypes.FREEZE))
+        if (source.is(DamageTypes.FALL) || source.is(DamageTypes.DROWN) || source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypes.FREEZE) || source.is(DamageTypes.IN_WALL))
             return false;
 
         if (getTarget() != null && (this.distanceTo(getTarget()) > antiCheeseDistance() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))) {
