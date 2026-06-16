@@ -123,7 +123,7 @@ public class AmbushLongerGoal extends Goal {
             double spawnX = target.getX() + Math.cos(angle) * radius;
             double spawnZ = target.getZ() + Math.sin(angle) * radius;
 
-            double spawnY = Mth.floor(this.entity.getY());
+            double spawnY = Mth.floor(this.entity.getY()) - 1;
             double headY = target.getY() + 1.0;
 
             double dx = target.getX() - spawnX;

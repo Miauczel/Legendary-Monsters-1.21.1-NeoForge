@@ -102,7 +102,7 @@ public class AmbushGoal extends Goal {
             if (attackTicks == 31 + 18) {
                 int totalPoints = 16;
                 double radius = 8.5;
-              //  spawnRingWave(1, 2, totalPoints, radius);
+                //  spawnRingWave(1, 2, totalPoints, radius);
             }
         }
     }
@@ -125,7 +125,7 @@ public class AmbushGoal extends Goal {
             double spawnX = target.getX() + Math.cos(angle) * radius;
             double spawnZ = target.getZ() + Math.sin(angle) * radius;
 
-            double spawnY = Mth.floor(this.entity.getY());
+            double spawnY = Mth.floor(this.entity.getY()) - 1;
             double headY = target.getY() + 1.0;
 
             double dx = target.getX() - spawnX;
