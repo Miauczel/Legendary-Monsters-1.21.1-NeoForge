@@ -15,6 +15,8 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
+import java.util.Arrays;
+
 import static net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY;
 
 public abstract class AbstractTrailParticle extends Particle {
@@ -56,12 +58,9 @@ public abstract class AbstractTrailParticle extends Particle {
     }
 
     public void tickTrail() {
-
         Vec3 currentPosition = new Vec3(this.x, this.y, this.z);
         if (trailPointer == -1) {
-            for (int i = 0; i < trailPositions.length; i++) {
-                trailPositions[i] = currentPosition;
-            }
+            Arrays.fill(trailPositions, currentPosition);
         }
         if (++this.trailPointer == this.trailPositions.length) {
             this.trailPointer = 0;
@@ -99,10 +98,17 @@ public abstract class AbstractTrailParticle extends Particle {
                 PoseStack.Pose posestack$pose = posestack.last();
                 Matrix4f matrix4f = posestack$pose.pose();
                 Matrix3f matrix3f = posestack$pose.normal();
-                vertexconsumer.addVertex(matrix4f, (float) draw1.x + (float) bottomAngleVec.x, (float) draw1.y + (float) bottomAngleVec.y, (float) draw1.z + (float) bottomAngleVec.z).setColor(r, g, b, trailA).setUv(u1, 1F).setOverlay(NO_OVERLAY).setUv2(j,j).setNormal(0.0F, 1.0F, 0.0F);
-                vertexconsumer.addVertex(matrix4f, (float) draw2.x + (float) bottomAngleVec.x, (float) draw2.y + (float) bottomAngleVec.y, (float) draw2.z + (float) bottomAngleVec.z).setColor(r, g, b, trailA).setUv(u2, 1F).setOverlay(NO_OVERLAY).setUv2(j,j).setNormal( 0.0F, 1.0F, 0.0F);
-                vertexconsumer.addVertex(matrix4f, (float) draw2.x + (float) topAngleVec.x, (float) draw2.y + (float) topAngleVec.y, (float) draw2.z + (float) topAngleVec.z).setColor(r, g, b, trailA).setUv(u2, 0).setOverlay(NO_OVERLAY).setUv2(j,j).setNormal( 0.0F, 1.0F, 0.0F);
-                vertexconsumer.addVertex(matrix4f, (float) draw1.x + (float) topAngleVec.x, (float) draw1.y + (float) topAngleVec.y, (float) draw1.z + (float) topAngleVec.z).setColor(r, g, b, trailA).setUv(u1, 0).setOverlay(NO_OVERLAY).setUv2(j,j).setNormal( 0.0F, 1.0F, 0.0F);
+                vertexconsumer.addVertex(matrix4f, (float) draw1.x + (float) bottomAngleVec.x, (float) draw1.y + (float) bottomAngleVec.y, (float) draw1.z + (float) bottomAngleVec.z)
+                        .setColor(r, g, b, trailA).setUv(u1, 1F).setOverlay(NO_OVERLAY).setUv2(j,j).setNormal(0.0F, 1.0F, 0.0F);
+
+                vertexconsumer.addVertex(matrix4f, (float) draw2.x + (float) bottomAngleVec.x, (float) draw2.y + (float) bottomAngleVec.y, (float) draw2.z + (float) bottomAngleVec.z).
+                        setColor(r, g, b, trailA).setUv(u2, 1F).setOverlay(NO_OVERLAY).setUv2(j,j).setNormal( 0.0F, 1.0F, 0.0F);
+
+                vertexconsumer.addVertex(matrix4f, (float) draw2.x + (float) topAngleVec.x, (float) draw2.y + (float) topAngleVec.y, (float) draw2.z + (float) topAngleVec.z)
+                        .setColor(r, g, b, trailA).setUv(u2, 0).setOverlay(NO_OVERLAY).setUv2(j,j).setNormal( 0.0F, 1.0F, 0.0F);
+
+                vertexconsumer.addVertex(matrix4f, (float) draw1.x + (float) topAngleVec.x, (float) draw1.y + (float) topAngleVec.y, (float) draw1.z + (float) topAngleVec.z)
+                        .setColor(r, g, b, trailA).setUv(u1, 0).setOverlay(NO_OVERLAY).setUv2(j,j).setNormal( 0.0F, 1.0F, 0.0F);
                 samples++;
                 drawFrom = sample;
             }
