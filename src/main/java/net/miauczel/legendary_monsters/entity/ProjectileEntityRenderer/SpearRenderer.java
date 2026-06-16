@@ -33,13 +33,13 @@ public class SpearRenderer extends EntityRenderer<ThrownHalbert> {
         pMatrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.yRotO, pEntity.getYRot()) - 90.0F));
         pMatrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.xRotO, pEntity.getXRot()) + 90.0F));
 
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
+     //   RenderSystem.enableBlend();
+        //RenderSystem.defaultBlendFunc();
 
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBuffer(pBuffer, this.model.renderType(this.getTextureLocation(pEntity)), false, pEntity.isFoil());
         this.model.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY);
 
-        RenderSystem.disableBlend();
+       // RenderSystem.disableBlend();
 
         pMatrixStack.popPose();
         super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);

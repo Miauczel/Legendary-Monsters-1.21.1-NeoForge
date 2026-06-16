@@ -35,13 +35,13 @@ public class ResurrectedJavelinRenderer extends EntityRenderer<ThrownResurrected
         pMatrixStack.translate(0,-1,0);
         pMatrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.yRotO, pEntity.getYRot())));
         pMatrixStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(pPartialTicks, -pEntity.xRotO, -pEntity.getXRot())));
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
+       // RenderSystem.enableBlend();
+        //RenderSystem.defaultBlendFunc();
 
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBuffer(pBuffer, this.model.renderType(this.getTextureLocation(pEntity)), false, pEntity.isFoil());
         this.model.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.colorFromFloat(0.5f,1,1,1));
 
-        RenderSystem.disableBlend();
+        //RenderSystem.disableBlend();
 
         pMatrixStack.popPose();
         super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
