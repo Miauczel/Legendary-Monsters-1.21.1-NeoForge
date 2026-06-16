@@ -79,6 +79,13 @@ public class AnnihilationPursuerEntity extends IAnimatedMiniBoss {
     public boolean addEffect(MobEffectInstance pEffectInstance, @javax.annotation.Nullable Entity pEntity) {
         return !isSleep();
     }
+
+    @Override
+    public void setPersistenceRequired() {
+        super.setPersistenceRequired();
+    }
+
+
     private static final EntityDataAccessor<Integer> IDLE_STATE = SynchedEntityData.defineId(AnnihilationPursuerEntity.class, EntityDataSerializers.INT);
     public final int TELEPORT_SLAM_COOLDOWN = 100;
     public final int SHIELD_STUN_COOLDOWN = 100;
