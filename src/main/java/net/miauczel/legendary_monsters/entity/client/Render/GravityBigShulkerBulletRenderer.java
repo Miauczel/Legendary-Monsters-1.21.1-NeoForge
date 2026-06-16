@@ -18,7 +18,7 @@ import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 
 public class GravityBigShulkerBulletRenderer extends EntityRenderer<GravityBigShulkerEntity> {
-    private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(LegendaryMonsters.MOD_ID,"textures/entity/shulker/spark.png");
+    private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/shulker/spark.png");
     private static final RenderType RENDER_TYPE = RenderType.entityTranslucent(TEXTURE_LOCATION);
     private final GravityBigShulkerBulletModel<GravityBigShulkerEntity> model;
 
