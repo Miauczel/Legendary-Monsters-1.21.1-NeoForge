@@ -6049,7 +6049,7 @@ public class TheObliteratorEntity extends IAnimatedBoss {
     }
 
     public void spawnArmedClones(double x, double z, double minY, double maxY, float rotation, int delay, double destX, double destY, double destZ, int animation, int life) {
-
+/*
         BlockPos blockpos = new BlockPos((int) x, (int) maxY, (int) z);
         boolean flag = false;
         double d0 = 0.0D;
@@ -6074,11 +6074,11 @@ public class TheObliteratorEntity extends IAnimatedBoss {
             blockpos = blockpos.below();
         } while (blockpos.getY() >= Mth.floor(minY) - 1);
 
-        if (flag) {
+        if (flag) {*/
             LivingEntity entity1 = (LivingEntity) this;
-            this.level().addFreshEntity(new TheObliteratorCloneWithArmsEntity(this.level(), x, (double) blockpos.getY() + d0,
+            this.level().addFreshEntity(new TheObliteratorCloneWithArmsEntity(this.level(), x, getY(),
                     z, rotation, delay, entity1, 16F, (float) destX, (float) destY, (float) destZ, animation, life));
-        }
+      //  }
     }
 
     public Crackiness getCrackiness() {
