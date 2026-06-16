@@ -85,6 +85,7 @@ public class ModBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelR
                              int packedLight,
                              int packedOverlay) {
         if (stack.getItem() == ModItems.TESSERACT.get()) {
+
             poseStack.pushPose();
             poseStack.translate(0.5F, 1.5F, 0.5F);
             poseStack.scale(1, -1, -1F);
@@ -92,8 +93,16 @@ public class ModBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelR
 
             VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(buffer, LMRenderTypes.entityCutoutNoCull(T_1), false, stack.hasFoil());
             TESSERACT_ITEM_MODEL.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay);
+            poseStack.popPose();
+
+            poseStack.pushPose();
+
+            poseStack.translate(0.5F, 1.5F, 0.5F);
+            poseStack.scale(1, -1, -1F);
+            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
             VertexConsumer vertexConsumer2 = ItemRenderer.getFoilBufferDirect(buffer, LMRenderTypes.getGlowEyes(T_2), false, stack.hasFoil());
             TESSERACT_ITEM_MODEL.renderToBuffer(poseStack, vertexConsumer2, packedLight, packedOverlay);
+
             poseStack.popPose();
         }
         if (stack.getItem() == ModItems.SHATTERED_GREATSWORD.get()) {
