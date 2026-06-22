@@ -9,7 +9,6 @@ import net.miauczel.legendary_monsters.config.ModConfig;
 import net.miauczel.legendary_monsters.damagetype.ModDamageTypes;
 import net.miauczel.legendary_monsters.effect.ModEffects;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.CameraShakeEntity;
-import net.miauczel.legendary_monsters.entity.AnimatedMonster.IAnimatedBoss.TheObliterator.TheObliteratorEntity;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.Mobs.SpaceStation.Flameborn.AnnihilationPursuer.goals.*;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.OriginClasses.AbstractChorusling;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.OriginClasses.IAnimatedMiniBoss;
@@ -76,8 +75,12 @@ public class AnnihilationPursuerEntity extends IAnimatedMiniBoss {
         this.setPersistenceRequired();
     }
 
-    public boolean addEffect(MobEffectInstance pEffectInstance, @javax.annotation.Nullable Entity pEntity) {
-        return !isSleep();
+    @Override
+    public boolean addEffect(MobEffectInstance instance, @Nullable Entity source) {
+        if (isSleep()) {
+            return false;
+        }
+        return super.addEffect(instance, source);
     }
 
     @Override
@@ -85,6 +88,10 @@ public class AnnihilationPursuerEntity extends IAnimatedMiniBoss {
         super.setPersistenceRequired();
     }
 
+    @Override
+    public boolean canBeAffected(MobEffectInstance instance) {
+        return super.canBeAffected(instance);
+    }
 
     private static final EntityDataAccessor<Integer> IDLE_STATE = SynchedEntityData.defineId(AnnihilationPursuerEntity.class, EntityDataSerializers.INT);
     public final int TELEPORT_SLAM_COOLDOWN = 100;
@@ -113,7 +120,6 @@ public class AnnihilationPursuerEntity extends IAnimatedMiniBoss {
                 getFirstPassenger().setShiftKeyDown(false);
             }
         }
-        // System.out.println("Has Hit: " + hasHit + " GetAttackState: " + getAttackState());
         if (teleport_slam_cooldown > 0) teleport_slam_cooldown--;
         if (stomp_combo_cooldown > 0) stomp_combo_cooldown--;
         if (shield_stun_cooldown > 0) shield_stun_cooldown--;
@@ -136,18 +142,7 @@ public class AnnihilationPursuerEntity extends IAnimatedMiniBoss {
         return pEntity.getType().is(ModEntityTags.ANNIHILATION_TEAM) || super.isAlliedTo(pEntity);
     }
 
-    @Override
-    public void aiStep() {
-        super.aiStep();
-    }
 
-    public int getIdleState() {
-        return entityData.get(IDLE_STATE);
-    }
-
-    public void setIdleState(int state) {
-        entityData.set(IDLE_STATE, state);
-    }
 
     public boolean isDuringTeleportation() {
         return (getAttackState() == 4 && attackTicks > 8 && attackTicks < 13) || (getAttackState() == 13 && attackTicks > 12 && attackTicks < 18)
@@ -159,8 +154,8 @@ public class AnnihilationPursuerEntity extends IAnimatedMiniBoss {
     protected void registerGoals() {
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, SnowGolem.class, true));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractChorusling.class, true));
@@ -174,7 +169,7 @@ public class AnnihilationPursuerEntity extends IAnimatedMiniBoss {
 
             public boolean canUse() {
                 return super.canUse() && AnnihilationPursuerEntity.this.getRandom().nextFloat() * 100.0F < 32.0F
-                        && AnnihilationPursuerEntity.this.getTarget() != null && buckshot_cooldown <=0;
+                        && AnnihilationPursuerEntity.this.getTarget() != null && buckshot_cooldown <= 0;
             }
         });
         this.goalSelector.addGoal(0, new IStateGoal(this, 22, 22, 0, MathUtils.toTicks(1.08f), 10) {
@@ -485,7 +480,7 @@ public class AnnihilationPursuerEntity extends IAnimatedMiniBoss {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        builder.define(IDLE_STATE,0);
+        builder.define(IDLE_STATE, 0);
     }
 
     @Override
@@ -949,8 +944,9 @@ public class AnnihilationPursuerEntity extends IAnimatedMiniBoss {
                 .add(Attributes.MOVEMENT_SPEED, 0.1F)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.5D)
                 .add(Attributes.ATTACK_DAMAGE, 10)
-                .add(Attributes.STEP_HEIGHT,1.5f);
+                .add(Attributes.STEP_HEIGHT, 1.5f);
     }
+
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
 

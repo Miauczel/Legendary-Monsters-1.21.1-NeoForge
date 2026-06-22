@@ -14,7 +14,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -41,7 +40,7 @@ public class IAnimatedMiniBoss extends IAnimatedMob {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        builder.define(SPAWN_POS,BlockPos.ZERO);
+        builder.define(SPAWN_POS, BlockPos.ZERO);
     }
 
     public double lastTargetX, lastTargetZ, lastTargetY;
@@ -150,7 +149,9 @@ public class IAnimatedMiniBoss extends IAnimatedMob {
     public float damageReduction() {
         return 1;
     }
-    public boolean canApplyMobEffect(MobEffectInstance instance){
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance instance) {
         return false;
     }
 

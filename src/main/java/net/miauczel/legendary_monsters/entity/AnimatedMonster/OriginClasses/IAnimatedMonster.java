@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -182,6 +183,19 @@ public class IAnimatedMonster extends Monster {
         } else {
             super.handleEntityEvent(id);
         }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        compound.putInt("attackTicks", attackTicks);
+        //  compound.putInt("attackState", getAttackState());
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        // setAttackState(compound.getInt("attackState"));
     }
 
     public LivingEntity target() {
@@ -420,17 +434,16 @@ public class IAnimatedMonster extends Monster {
         this.attackTicks = 0;
         this.attackDelayTicks = attackDelayTicksValue();
         this.entityData.set(ATTACK_STATE, input);
-
         this.level().broadcastEntityEvent(this, (byte) -input);
     }
 
 
     public void tick() {
         super.tick();
+
         if (this.getAttackState() > 0) {
             ++this.attackTicks;
         }
-
         if (this.attackCooldown > 0) {
             --this.attackCooldown;
         }

@@ -1,12 +1,8 @@
 package net.miauczel.legendary_monsters.entity.ai.goal;
 
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.OriginClasses.IAnimatedMonster;
-
-import net.miauczel.legendary_monsters.util.MathUtils;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
@@ -58,7 +54,7 @@ public class IStateGoal extends Goal {
     }
 
     public boolean canContinueToUse() {
-        return this.attackfinaltick > 0 ? this.entity.attackTicks <= this.attackfinaltick : this.canUse();
+        return this.attackfinaltick > 0 ? this.entity.attackTicks <= this.attackfinaltick : this.canUse() && entity.getAttackState() == attackstate;
     }
 
     public void tick() {

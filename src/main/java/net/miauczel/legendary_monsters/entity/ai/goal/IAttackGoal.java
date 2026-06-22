@@ -54,7 +54,7 @@ public class IAttackGoal extends Goal {
     }
 
     public boolean canContinueToUse() {
-        return this.entity.attackTicks < this.attackMaxtick;
+        return this.entity.attackTicks < this.attackMaxtick&& entity.getAttackState() == attackstate;
     }
 
     public void tick() {
