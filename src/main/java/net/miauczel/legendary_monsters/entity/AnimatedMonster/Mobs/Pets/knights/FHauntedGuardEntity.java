@@ -318,45 +318,36 @@ public class FHauntedGuardEntity extends IAnimatedTamableMob {
 
                         if (pPlayer.isShiftKeyDown()) {
                             if (item == Items.GOLD_INGOT && !(this.getTextureVariant() == 1)) {
-                                SoundEvent customAttackSound2 = (SoundEvent) SoundEvents.ARMOR_EQUIP_GOLD;
-                                this.level().playSound(null, this.blockPosition(), customAttackSound2, SoundSource.NEUTRAL, 2.0f, 1.0f);
+                                this.level().playSound(null, this.blockPosition(), SoundEvents.ARMOR_EQUIP_GOLD.value(), SoundSource.NEUTRAL, 2.0f, 1.0f);
                                 newTextureVariant = 1;
 
                             } else if (item == Items.AMETHYST_SHARD && !(this.getTextureVariant() == 2)) {
-                                SoundEvent customAttackSound2 = (SoundEvent) SoundEvents.ARMOR_EQUIP_DIAMOND;
-                                this.level().playSound(null, this.blockPosition(), customAttackSound2, SoundSource.NEUTRAL, 2.0f, 1.0f);
+                                this.level().playSound(null, this.blockPosition(), SoundEvents.ARMOR_EQUIP_DIAMOND.value(), SoundSource.NEUTRAL, 2.0f, 1.0f);
                                 newTextureVariant = 2;
 
                             } else if (item == Items.EMERALD && !(this.getTextureVariant() == 3)) {
-                                SoundEvent customAttackSound2 = (SoundEvent) SoundEvents.ARMOR_EQUIP_DIAMOND;
-                                this.level().playSound(null, this.blockPosition(), customAttackSound2, SoundSource.NEUTRAL, 2.0f, 1.0f);
+                                this.level().playSound(null, this.blockPosition(), SoundEvents.ARMOR_EQUIP_DIAMOND.value(), SoundSource.NEUTRAL, 2.0f, 1.0f);
                                 newTextureVariant = 3;
 
                             } else if (item == Items.COPPER_INGOT && !(this.getTextureVariant() == 4)) {
-                                SoundEvent customAttackSound2 = (SoundEvent) SoundEvents.ARMOR_EQUIP_CHAIN;
-                                this.level().playSound(null, this.blockPosition(), customAttackSound2, SoundSource.NEUTRAL, 2.0f, 1.0f);
+                                this.level().playSound(null, this.blockPosition(), SoundEvents.ARMOR_EQUIP_CHAIN.value(), SoundSource.NEUTRAL, 2.0f, 1.0f);
                                 newTextureVariant = 4;
 
                             } else if (item == Items.DIAMOND && !(this.getTextureVariant() == 5)) {
-                                SoundEvent customAttackSound2 = (SoundEvent) SoundEvents.ARMOR_EQUIP_DIAMOND;
-                                this.level().playSound(null, this.blockPosition(), customAttackSound2, SoundSource.NEUTRAL, 2.0f, 1.0f);
+                                this.level().playSound(null, this.blockPosition(), SoundEvents.ARMOR_EQUIP_DIAMOND.value(), SoundSource.NEUTRAL, 2.0f, 1.0f);
                                 newTextureVariant = 5;
 
                             } else if (item == Items.ECHO_SHARD && !(this.getTextureVariant() == 6)) {
-                                SoundEvent customAttackSound = (SoundEvent) SoundEvents.ARMOR_EQUIP_NETHERITE;
-                                this.level().playSound(null, this.blockPosition(), customAttackSound, SoundSource.NEUTRAL, 2.0f, 1.0f);
-                                SoundEvent customAttackSound2 = SoundEvents.WARDEN_DEATH;
-                                this.level().playSound(null, this.blockPosition(), customAttackSound2, SoundSource.NEUTRAL, 1.0f, 1.0f);
+                                this.level().playSound(null, this.blockPosition(), SoundEvents.ARMOR_EQUIP_NETHERITE.value(), SoundSource.NEUTRAL, 2.0f, 1.0f);
+                                this.level().playSound(null, this.blockPosition(), SoundEvents.WARDEN_DEATH, SoundSource.NEUTRAL, 1.0f, 1.0f);
                                 newTextureVariant = 6;
 
                             } else if (item == Items.IRON_INGOT && !(this.getTextureVariant() == 7)) {
-                                SoundEvent customAttackSound2 = (SoundEvent) SoundEvents.ARMOR_EQUIP_IRON;
-                                this.level().playSound(null, this.blockPosition(), customAttackSound2, SoundSource.NEUTRAL, 2.0f, 1.0f);
+                                this.level().playSound(null, this.blockPosition(), SoundEvents.ARMOR_EQUIP_IRON.value(), SoundSource.NEUTRAL, 2.0f, 1.0f);
                                 newTextureVariant = 7;
 
                             } else if (item == Items.NETHERITE_INGOT && !(this.getTextureVariant() == 8)) {
-                                SoundEvent customAttackSound2 = (SoundEvent) SoundEvents.ARMOR_EQUIP_NETHERITE;
-                                this.level().playSound(null, this.blockPosition(), customAttackSound2, SoundSource.NEUTRAL, 2.0f, 1.0f);
+                                this.level().playSound(null, this.blockPosition(), SoundEvents.ARMOR_EQUIP_NETHERITE.value(), SoundSource.NEUTRAL, 2.0f, 1.0f);
                                 newTextureVariant = 8;
                             }
 
