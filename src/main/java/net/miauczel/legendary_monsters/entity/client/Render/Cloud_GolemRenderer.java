@@ -4,10 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.miauczel.legendary_monsters.LegendaryMonsters;
 import net.miauczel.legendary_monsters.entity.AnimatedMonster.IAnimatedBoss.CloudGolem.Cloud_GolemEntity;
+import net.miauczel.legendary_monsters.entity.client.ModModelLayers;
+import net.miauczel.legendary_monsters.entity.client.Model.Cloud_GolemModel;
 import net.miauczel.legendary_monsters.entity.client.layer.CloudGolemLaserBallInnerLayer;
 import net.miauczel.legendary_monsters.entity.client.layer.CloudGolemLaserBallOuterLayer;
-import net.miauczel.legendary_monsters.entity.client.Model.Cloud_GolemModel;
-import net.miauczel.legendary_monsters.entity.client.ModModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -30,7 +30,7 @@ public class Cloud_GolemRenderer extends MobRenderer<Cloud_GolemEntity, Cloud_Go
         this.addLayer(new CloudGolemLaserBallInnerLayer(this));
 
         this.addLayer(new CloudGolemLaserBallOuterLayer(this));
-        this.addLayer(new EyesLayer<Cloud_GolemEntity, Cloud_GolemModel<Cloud_GolemEntity>>(this) {
+        this.addLayer(new EyesLayer<>(this) {
             @Override
             public RenderType renderType() {
                 return RenderType.eyes(ResourceLocation.fromNamespaceAndPath(LegendaryMonsters.MOD_ID, "textures/entity/cloud_golem/glow/cloud_golem_angry_glow3.png"));
@@ -44,27 +44,22 @@ public class Cloud_GolemRenderer extends MobRenderer<Cloud_GolemEntity, Cloud_Go
 
                 RenderType renderType = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(LegendaryMonsters.MOD_ID, "textures/entity/cloud_golem/glow/cloud_golem_angry_glow3.png"));
                 RenderType renderType2 = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(LegendaryMonsters.MOD_ID, "textures/entity/cloud_golem/glow/cloud_golem_angry_glow4.png"));
-                if (entity.getAttackState() != 32) {
+                if (entity.getAttackState() != 32 && entity.getAttackState() != 33) {
                     if (entity.isAngry()) {
                         VertexConsumer vertexConsumer = bufferSource.getBuffer(renderType);
 
-                        this.getParentModel().renderToBuffer(poseStack, vertexConsumer, FastColor.ARGB32.colorFromFloat( alpha, alpha, alpha, alpha), OverlayTexture.NO_OVERLAY);
+                        this.getParentModel().renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.colorFromFloat(alpha, alpha, alpha, alpha));
                     } else {
                         VertexConsumer vertexConsumer2 = bufferSource.getBuffer(renderType2);
-
-                        this.getParentModel().renderToBuffer(poseStack, vertexConsumer2, FastColor.ARGB32.colorFromFloat( alpha, alpha, alpha, alpha), OverlayTexture.NO_OVERLAY);
-
+                        this.getParentModel().renderToBuffer(poseStack, vertexConsumer2, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.colorFromFloat(alpha, alpha, alpha, alpha));
                     }
 
-                }else{
-                    VertexConsumer vertexConsumer3 = bufferSource.getBuffer(renderType);
-                    this.getParentModel().renderToBuffer(poseStack, vertexConsumer3, packedLight, OverlayTexture.NO_OVERLAY);
                 }
             }
         });
     }
 
-        @Override
+    @Override
     public ResourceLocation getTextureLocation(Cloud_GolemEntity pEntity) {
         switch (pEntity.getTextureVariant()) {
             case 1:
