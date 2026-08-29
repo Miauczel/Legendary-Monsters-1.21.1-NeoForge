@@ -316,10 +316,6 @@ public class LegendaryMonsters {
 
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.SMALL_SPIKE_TRAP_BLOCK.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.BIG_SPIKE_TRAP_BLOCK.get(), RenderType.cutout());
-            ItemBlockRenderTypes.setRenderLayer(Block.byItem(ModItems.SOUL_GREAT_SWORD.get()), RenderType.translucent());
-
-            {
-            }
         }
     }
 
